@@ -9,23 +9,20 @@
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard-dynamic-subset.css">
 
   <style>
-    /* =========================================
-       ✨ 완전 새롭게 설계된 모던 디자인 시스템 ✨
-       ========================================= */
     :root {
-      --bg-color: #F1F5F9;          /* 부드러운 앱 배경색 */
-      --surface: #FFFFFF;           /* 카드/패널 배경색 */
-      --text-main: #0F172A;         /* 진한 메인 텍스트 */
-      --text-muted: #64748B;        /* 보조 텍스트 */
-      --primary: #4F46E5;           /* 메인 브랜드 컬러 (세련된 인디고) */
+      --bg-color: #F1F5F9;          
+      --surface: #FFFFFF;           
+      --text-main: #0F172A;         
+      --text-muted: #64748B;        
+      --primary: #4F46E5;           
       --primary-hover: #4338CA;
-      --secondary: #F8FAFC;         /* 서브 요소 배경 */
-      --border: #E2E8F0;            /* 은은한 테두리 */
+      --secondary: #F8FAFC;         
+      --border: #E2E8F0;            
       --input-bg: #F8FAFC;
       --success: #10B981;
       --danger: #EF4444;
       --warn: #F59E0B;
-      --radius-lg: 20px;            /* 둥글고 부드러운 모서리 */
+      --radius-lg: 20px;            
       --radius-md: 12px;
       --radius-sm: 8px;
       --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
@@ -44,249 +41,89 @@
       padding-bottom: 60px;
     }
 
-    .wrap {
-      max-width: 900px;
-      margin: 32px auto;
-      padding: 0 20px;
-    }
+    .wrap { max-width: 900px; margin: 32px auto; padding: 0 20px; }
 
-    /* --- 감성 히어로 배너 --- */
+    /* 감성 히어로 배너 */
     .hero-banner {
-      position: relative;
-      width: 100%;
-      height: 220px;
-      border-radius: var(--radius-lg);
+      position: relative; width: 100%; height: 220px; border-radius: var(--radius-lg);
       background: url('https://images.unsplash.com/photo-1519681393784-d120267933ba?auto=format&fit=crop&w=1200&q=80') center/cover no-repeat;
-      margin-bottom: 24px;
-      display: flex;
-      align-items: flex-end;
-      padding: 30px;
-      box-shadow: var(--shadow-md);
-      overflow: hidden;
+      margin-bottom: 24px; display: flex; flex-direction: column; justify-content: flex-end;
+      padding: 30px; box-shadow: var(--shadow-md); overflow: hidden;
     }
     .hero-banner::before {
       content: ''; position: absolute; top: 0; left: 0; right: 0; bottom: 0;
       background: linear-gradient(to top, rgba(15,23,42,0.85) 0%, rgba(15,23,42,0.2) 100%);
     }
-    .hero-banner h1 {
-      position: relative;
-      color: #ffffff;
-      margin: 0;
-      font-size: 28px;
-      font-weight: 800;
-      letter-spacing: -0.5px;
-      text-shadow: 0 2px 4px rgba(0,0,0,0.5);
+    .hero-banner-content { position: relative; z-index: 1; display: flex; justify-content: space-between; align-items: flex-end; width: 100%; }
+    .hero-banner h1 { color: #ffffff; margin: 0; font-size: 28px; font-weight: 800; letter-spacing: -0.5px; text-shadow: 0 2px 4px rgba(0,0,0,0.5); }
+    
+    /* 출석 뱃지 */
+    .attendance-badge {
+      background: rgba(255, 255, 255, 0.2); backdrop-filter: blur(8px);
+      padding: 6px 14px; border-radius: 100px; color: #fff; font-size: 14px; font-weight: 700;
+      border: 1px solid rgba(255,255,255,0.3); box-shadow: var(--shadow-sm);
     }
 
-    /* --- 패널 및 카드 기본 --- */
     .panel, .card {
-      background: var(--surface);
-      border-radius: var(--radius-lg);
-      padding: 28px;
-      box-shadow: var(--shadow-md);
-      border: 1px solid rgba(255,255,255,0.8); /* 입체감 */
-      margin-bottom: 20px;
+      background: var(--surface); border-radius: var(--radius-lg); padding: 28px;
+      box-shadow: var(--shadow-md); border: 1px solid rgba(255,255,255,0.8); margin-bottom: 20px;
     }
 
-    .card {
-      padding: 24px;
-      border: 1px solid var(--border);
-      transition: transform 0.2s ease, box-shadow 0.2s ease;
-    }
-    .card:hover {
-      box-shadow: var(--shadow-lg);
-      transform: translateY(-2px);
-    }
+    .card { padding: 24px; border: 1px solid var(--border); transition: transform 0.2s ease, box-shadow 0.2s ease; }
+    .card:hover { box-shadow: var(--shadow-lg); transform: translateY(-2px); }
 
-    /* --- 폼 & 컨트롤 영역 --- */
-    .controls-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
-      gap: 16px;
-    }
-    .control-group label {
-      display: block;
-      font-size: 13px;
-      font-weight: 700;
-      color: var(--text-muted);
-      margin-bottom: 6px;
-    }
+    .controls-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(130px, 1fr)); gap: 16px; }
+    .control-group label { display: block; font-size: 13px; font-weight: 700; color: var(--text-muted); margin-bottom: 6px; }
     select, input[type="number"], input[type="text"], textarea {
-      width: 100%;
-      background: var(--input-bg);
-      border: 1px solid var(--border);
-      color: var(--text-main);
-      padding: 12px 14px;
-      border-radius: var(--radius-md);
-      font-size: 15px;
-      font-family: inherit;
-      font-weight: 500;
-      transition: all 0.2s ease;
+      width: 100%; background: var(--input-bg); border: 1px solid var(--border); color: var(--text-main);
+      padding: 12px 14px; border-radius: var(--radius-md); font-size: 15px; font-family: inherit; font-weight: 500; transition: all 0.2s ease;
     }
-    select:focus, input:focus, textarea:focus {
-      outline: none;
-      border-color: var(--primary);
-      background: #ffffff;
-      box-shadow: 0 0 0 4px rgba(79, 70, 229, 0.15);
-    }
+    select:focus, input:focus, textarea:focus { outline: none; border-color: var(--primary); background: #ffffff; box-shadow: 0 0 0 4px rgba(79, 70, 229, 0.15); }
 
-    /* --- 세련된 버튼 스타일 --- */
-    .actions-row {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 12px;
-      margin-top: 24px;
-      padding-top: 24px;
-      border-top: 1px solid var(--border);
-    }
+    .actions-row { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 24px; padding-top: 24px; border-top: 1px solid var(--border); }
     button {
-      background: var(--primary);
-      color: white;
-      border: none;
-      padding: 12px 20px;
-      border-radius: var(--radius-md);
-      font-weight: 700;
-      font-size: 15px;
-      cursor: pointer;
-      display: inline-flex;
-      justify-content: center;
-      align-items: center;
-      transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
-      box-shadow: 0 4px 6px rgba(79, 70, 229, 0.2);
+      background: var(--primary); color: white; border: none; padding: 12px 20px; border-radius: var(--radius-md);
+      font-weight: 700; font-size: 15px; cursor: pointer; display: inline-flex; justify-content: center; align-items: center;
+      transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1); box-shadow: 0 4px 6px rgba(79, 70, 229, 0.2);
     }
-    button:hover {
-      background: var(--primary-hover);
-      transform: translateY(-2px);
-      box-shadow: 0 6px 12px rgba(79, 70, 229, 0.3);
-    }
+    button:hover { background: var(--primary-hover); transform: translateY(-2px); box-shadow: 0 6px 12px rgba(79, 70, 229, 0.3); }
     button:active { transform: translateY(0); }
+    button.ghost { background: #FFFFFF; color: var(--text-main); border: 1px solid #CBD5E1; box-shadow: var(--shadow-sm); }
+    button.ghost:hover { background: #F8FAFC; border-color: #94A3B8; box-shadow: var(--shadow-md); }
+    
+    /* 출석 버튼 전용 (녹색) */
+    button#btnAttendance { background: var(--success); color: white; border: none; box-shadow: 0 4px 6px rgba(16, 185, 129, 0.2); }
+    button#btnAttendance:hover { background: #059669; box-shadow: 0 6px 12px rgba(16, 185, 129, 0.3); }
 
-    /* 서브 버튼 (회색) */
-    button.ghost {
-      background: #FFFFFF;
-      color: var(--text-main);
-      border: 1px solid #CBD5E1;
-      box-shadow: var(--shadow-sm);
-    }
-    button.ghost:hover {
-      background: #F8FAFC;
-      border-color: #94A3B8;
-      box-shadow: var(--shadow-md);
-    }
-
-    /* 실전 모의고사 전용 버튼 (황금색) */
-    button#exam {
-      background: linear-gradient(135deg, #F59E0B, #D97706);
-      box-shadow: 0 4px 10px rgba(245, 158, 11, 0.3);
-    }
-    button#exam:hover {
-      background: linear-gradient(135deg, #FCD34D, #F59E0B);
-      box-shadow: 0 6px 15px rgba(245, 158, 11, 0.4);
-    }
-
-    /* 위험/정답보기 버튼 (빨간색) */
+    button#exam { background: linear-gradient(135deg, #F59E0B, #D97706); box-shadow: 0 4px 10px rgba(245, 158, 11, 0.3); }
+    button#exam:hover { background: linear-gradient(135deg, #FCD34D, #F59E0B); box-shadow: 0 6px 15px rgba(245, 158, 11, 0.4); }
     button.warn { background: var(--danger); box-shadow: 0 4px 6px rgba(239, 68, 68, 0.2); }
     button.warn:hover { background: #DC2626; box-shadow: 0 6px 12px rgba(239, 68, 68, 0.3); }
 
-    /* --- 문제 카드 내부 디자인 --- */
     summary { cursor: pointer; list-style: none; outline: none; }
     summary::-webkit-details-marker { display: none; }
-    .badge {
-      display: inline-block;
-      background: #EEF2FF;
-      color: var(--primary);
-      padding: 4px 10px;
-      border-radius: 20px;
-      font-size: 12px;
-      font-weight: 800;
-      margin-right: 8px;
-      vertical-align: middle;
-    }
-    .meta-title {
-      font-size: 16px;
-      font-weight: 700;
-      color: var(--text-main);
-      display: inline-block;
-      vertical-align: middle;
-    }
+    .badge { display: inline-block; background: #EEF2FF; color: var(--primary); padding: 4px 10px; border-radius: 20px; font-size: 12px; font-weight: 800; margin-right: 8px; vertical-align: middle; }
+    .meta-title { font-size: 16px; font-weight: 700; color: var(--text-main); display: inline-block; vertical-align: middle; }
     
-    .guide-text {
-      background: var(--secondary);
-      border-left: 4px solid var(--primary);
-      padding: 12px 16px;
-      border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
-      font-size: 13px;
-      color: var(--text-muted);
-      margin: 16px 0;
-    }
+    .guide-text { background: var(--secondary); border-left: 4px solid var(--primary); padding: 12px 16px; border-radius: 0 var(--radius-sm) var(--radius-sm) 0; font-size: 13px; color: var(--text-muted); margin: 16px 0; }
     .guide-text strong { color: var(--text-main); font-weight: 700; }
+    .qtext { font-size: 17px; line-height: 1.7; color: var(--text-main); font-weight: 500; margin: 16px 0; }
 
-    .qtext {
-      font-size: 17px;
-      line-height: 1.7;
-      color: var(--text-main);
-      font-weight: 500;
-      margin: 16px 0;
-    }
-
-    /* --- 답변 영역 --- */
-    .ansrow {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 10px;
-      align-items: center;
-      margin-top: 20px;
-    }
-    .ansrow input[type="text"] {
-      flex: 1;
-      min-width: 150px;
-    }
+    .ansrow { display: flex; flex-wrap: wrap; gap: 10px; align-items: center; margin-top: 20px; }
+    .ansrow input[type="text"] { flex: 1; min-width: 150px; }
     .ansrow button { padding: 10px 16px; font-size: 14px; }
-
-    /* 채점 결과 텍스트 */
-    .judge, .model {
-      margin-top: 16px;
-      padding: 16px;
-      border-radius: var(--radius-md);
-      background: #F8FAFC;
-      border: 1px solid var(--border);
-      font-size: 15px;
-    }
+    .judge, .model { margin-top: 16px; padding: 16px; border-radius: var(--radius-md); background: #F8FAFC; border: 1px solid var(--border); font-size: 15px; }
     .err { color: var(--danger); font-weight: 700; text-decoration: underline; text-decoration-color: rgba(239,68,68,0.3); text-underline-offset: 4px; }
 
-    /* --- 기타 UI --- */
-    .section-title {
-      font-size: 20px;
-      font-weight: 800;
-      color: var(--text-main);
-      margin: 32px 0 16px;
-      display: flex;
-      align-items: center;
-    }
-    .section-title::before {
-      content: ''; display: inline-block; width: 6px; height: 20px; background: var(--primary); border-radius: 4px; margin-right: 10px;
-    }
+    .section-title { font-size: 20px; font-weight: 800; color: var(--text-main); margin: 32px 0 16px; display: flex; align-items: center; }
+    .section-title::before { content: ''; display: inline-block; width: 6px; height: 20px; background: var(--primary); border-radius: 4px; margin-right: 10px; }
     
-    #timer {
-      position: fixed;
-      top: 20px;
-      right: 20px;
-      background: rgba(15, 23, 42, 0.9);
-      backdrop-filter: blur(8px);
-      color: white;
-      font-weight: 700;
-      font-size: 18px;
-      padding: 10px 20px;
-      border-radius: 100px;
-      z-index: 9999;
-      box-shadow: var(--shadow-lg);
-    }
-    
+    #timer { position: fixed; top: 20px; right: 20px; background: rgba(15, 23, 42, 0.9); backdrop-filter: blur(8px); color: white; font-weight: 700; font-size: 18px; padding: 10px 20px; border-radius: 100px; z-index: 9999; box-shadow: var(--shadow-lg); }
     .score-wrap { font-size: 18px; font-weight: 800; color: var(--primary); }
 
-    /* 모바일 최적화 */
     @media (max-width: 640px) {
-      .hero-banner { height: 160px; padding: 20px; }
+      .hero-banner { height: 180px; padding: 20px; justify-content: flex-end; }
+      .hero-banner-content { flex-direction: column; align-items: flex-start; gap: 10px; }
       .hero-banner h1 { font-size: 22px; }
       .panel, .card { padding: 20px; }
       .actions-row { flex-direction: column; }
@@ -299,7 +136,10 @@
   <div class="wrap">
     
     <div class="hero-banner">
-      <h1>실전 모의고사 — 요한계시록(7~12장)</h1>
+      <div class="hero-banner-content">
+        <h1>실전 모의고사 — 요한계시록(7~12장)</h1>
+        <div id="attendanceBadge" class="attendance-badge">🔥 누적 출석: 0일</div>
+      </div>
     </div>
 
     <div class="panel">
@@ -332,6 +172,16 @@
         </div>
 
         <div class="control-group">
+          <label>말씀 묶기</label>
+          <select id="verseGroup">
+            <option value="1">1절씩</option>
+            <option value="2">2절씩</option>
+            <option value="3">3절씩</option>
+            <option value="random" selected>1~3절 랜덤</option>
+          </select>
+        </div>
+
+        <div class="control-group">
           <label>문항 유형</label>
           <select id="modesel">
             <option value="mix" selected>혼합(빈칸+서술)</option>
@@ -343,19 +193,20 @@
         <div class="control-group">
           <label>난이도</label>
           <select id="level">
-            <option value="easy">쉬움 (빈칸 조금)</option>
-            <option value="normal" selected>보통 (적절히)</option>
-            <option value="hard">어려움 (빈칸 많음)</option>
+            <option value="easy">쉬움</option>
+            <option value="normal" selected>보통</option>
+            <option value="hard">어려움</option>
             <option value="extreme">극악 (하드코어)</option>
           </select>
         </div>
       </div>
 
       <div class="actions-row">
+        <button id="btnAttendance">📅 출석체크</button>
         <button id="gen">📝 문제 출제</button>
         <button id="regen" class="ghost">🔄 다시 섞기</button>
         <button id="printBtn" class="ghost">🖨️ 프린트</button>
-        <button id="exam">⏱️ 실전 모의고사 시작</button>
+        <button id="exam">⏱️ 실전 모의고사</button>
       </div>
     </div>
 
@@ -396,6 +247,38 @@
     return clean?clean.split(" "):[];
   };
 
+  /* =========================================================
+     [신규] 오프라인 출석체크 로직 (localStorage 활용)
+  ========================================================= */
+  function getTodayStr() {
+    const d = new Date();
+    // 로컬 시간 기준 YYYY-MM-DD 포맷 생성
+    return `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`;
+  }
+
+  function updateAttendanceUI() {
+    let log = JSON.parse(localStorage.getItem('bible_attendance') || '[]');
+    $('#attendanceBadge').innerHTML = `🔥 누적 출석: ${log.length}일`;
+  }
+
+  function doAttendance() {
+    const today = getTodayStr();
+    let log = JSON.parse(localStorage.getItem('bible_attendance') || '[]');
+    if (log.includes(today)) {
+      alert('오늘은 이미 출석하셨습니다! 매일 꾸준히 하시는 모습 응원합니다. 😊');
+    } else {
+      log.push(today);
+      localStorage.setItem('bible_attendance', JSON.stringify(log));
+      updateAttendanceUI();
+      alert('🎉 출석체크 완료! 오늘도 말씀과 함께 화이팅입니다!');
+    }
+  }
+
+  // 로딩 시 출석 배지 업데이트 및 버튼 이벤트 연결
+  updateAttendanceUI();
+  $('#btnAttendance').addEventListener('click', doAttendance);
+
+
   function goToNextCard(fromCard){
     const curr = parseInt(fromCard?.dataset?.idx || "-1", 10);
     const next = document.querySelector(`.card[data-idx="${curr+1}"]`);
@@ -418,14 +301,16 @@
   const chapterSel = $('#chapter');
   const startChSel = $('#startCh');
   const endChSel   = $('#endCh');
-  const submitBtn  = $('#submitExam');
-  const genBtn     = $('#gen');
-  const regenBtn   = $('#regen');
   const countInput = $('#count');
   const modeSel    = $('#modesel');
   const levelSel   = $('#level');
+  const verseGroup = $('#verseGroup'); // 묶기 옵션
+  
+  const submitBtn  = $('#submitExam');
+  const genBtn     = $('#gen');
+  const regenBtn   = $('#regen');
   const retryBtn   = $('#retryWrong');
-  const controls   = [rangeMode, chapterSel, startChSel, endChSel, countInput, modeSel, levelSel];
+  const controls   = [rangeMode, chapterSel, startChSel, endChSel, countInput, modeSel, levelSel, verseGroup];
   
   const STOP_KO = new Set(["은","는","이","가","을","를","에","에서","에게","으로","와","과","또","그리고","그러나","이는","혹은","너희","그의","그것"]);
   const MIX_CLOZE_RATIO = 0.30; 
@@ -462,8 +347,8 @@
     endChBox.style.display  = useRange ? 'block' : 'none';
   });
 
-  // ===== BIBLE → 랜덤 절 묶음 로직 =====
-  function collectVerses(chapters){
+  // ===== BIBLE → 사용자가 선택한 옵션에 맞춰 절 묶기 =====
+  function collectVerses(chapters, groupSizeOpt){
     const out=[]; if(typeof BIBLE==="undefined") return out;
     chapters.forEach(ch=>{
       const obj=BIBLE[+ch]; if(!obj) return;
@@ -476,7 +361,14 @@
 
       let i = 0;
       while(i < verses.length) {
-        let size = Math.floor(Math.random() * 3) + 1; 
+        // 옵션에 따른 묶음 단위 계산
+        let size = 1;
+        if (groupSizeOpt === 'random') {
+          size = Math.floor(Math.random() * 3) + 1; 
+        } else {
+          size = parseInt(groupSizeOpt, 10) || 1;
+        }
+
         let chunk = verses.slice(i, i + size);
         if (chunk.length > 0) {
           let startV = chunk[0].vno;
@@ -688,6 +580,8 @@
     const cnt   = Math.max(1, Math.min(200, parseInt($('#count').value || "1",10)));
     const mode  = $('#modesel').value;
     const level = $('#level') ? $('#level').value : 'normal';
+    const groupOpt = verseGroup.value; // 사용자가 선택한 절 묶기 옵션
+
     const realCnt  = examRunning ? 25 : cnt;
     const realMode = examRunning ? 'mix' : mode;
     const realLvl  = examRunning ? 'extreme' : level;
@@ -701,7 +595,8 @@
       chapters=[chapterSel.value];
     }
 
-    const versesPool = collectVerses(chapters);
+    // 선택된 묶기 옵션을 넘겨줌
+    const versesPool = collectVerses(chapters, groupOpt);
     if(!versesPool.length){ alert("선택한 범위에 구절이 없습니다."); return; }
 
     let wantEssay = 0, wantCloze = 0;
