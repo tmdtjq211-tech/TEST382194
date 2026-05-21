@@ -4,360 +4,335 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>실전 모의고사 • 요한계시록(7~12장)</title>
+  
+  <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard-dynamic-subset.css">
+
   <style>
-    :root{
-      --bg:#0b1020; --card:#111831; --ink:#eef3ff; --muted:#9fb0d0; --accent:#7aa2ff;
-      --ok:#4ade80; --err:#ff6b6b; --line:#22305a; --ink2:#cfe0ff;
+    /* =========================================
+       ✨ 완전 새롭게 설계된 모던 디자인 시스템 ✨
+       ========================================= */
+    :root {
+      --bg-color: #F1F5F9;          /* 부드러운 앱 배경색 */
+      --surface: #FFFFFF;           /* 카드/패널 배경색 */
+      --text-main: #0F172A;         /* 진한 메인 텍스트 */
+      --text-muted: #64748B;        /* 보조 텍스트 */
+      --primary: #4F46E5;           /* 메인 브랜드 컬러 (세련된 인디고) */
+      --primary-hover: #4338CA;
+      --secondary: #F8FAFC;         /* 서브 요소 배경 */
+      --border: #E2E8F0;            /* 은은한 테두리 */
+      --input-bg: #F8FAFC;
+      --success: #10B981;
+      --danger: #EF4444;
+      --warn: #F59E0B;
+      --radius-lg: 20px;            /* 둥글고 부드러운 모서리 */
+      --radius-md: 12px;
+      --radius-sm: 8px;
+      --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+      --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+      --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
     }
-    html,body{height:100%}
-    body{margin:0;font-family:system-ui, "Apple SD Gothic Neo", "Noto Sans KR", Segoe UI, Roboto, sans-serif;background:var(--bg);color:var(--ink)}
-    .wrap{max-width:1000px;margin:24px auto;padding:0 16px}
-    .panel{background:var(--card);border-radius:18px;padding:16px;box-shadow:0 8px 24px rgba(0,0,0,.35)}
+
+    * { box-sizing: border-box; }
+    html, body { height: 100%; margin: 0; }
     
-    /* ✅ 추가된 감성 배너 이미지 */
-    .header-banner {
-      width: 100%;
-      height: 180px;
-      border-radius: 12px;
-      background: url('https://images.unsplash.com/photo-1519681393784-d120267933ba?auto=format&fit=crop&w=1000&q=80') center/cover no-repeat;
-      margin-bottom: 20px;
-      box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+    body {
+      font-family: 'Pretendard', system-ui, -apple-system, sans-serif;
+      background-color: var(--bg-color);
+      color: var(--text-main);
+      line-height: 1.6;
+      padding-bottom: 60px;
+    }
+
+    .wrap {
+      max-width: 900px;
+      margin: 32px auto;
+      padding: 0 20px;
+    }
+
+    /* --- 감성 히어로 배너 --- */
+    .hero-banner {
       position: relative;
-    }
-    .header-banner::after {
-      content: '';
-      position: absolute;
-      top: 0; left: 0; right: 0; bottom: 0;
-      background: linear-gradient(to top, rgba(0,0,0,0.4), transparent);
-      border-radius: 12px;
-    }
-
-    .row{display:flex;flex-wrap:wrap;gap:12px;align-items:center}
-    .row>*{margin:4px 0}
-    label{font-size:14px;color:var(--muted)}
-    select,input[type="number"],textarea{
-      background:#0f1430;color:var(--ink);border:1px solid var(--line);border-radius:12px;padding:10px 12px;outline:none;
-    }
-    select:focus,input:focus,textarea:focus{border-color:var(--accent)}
-    button{
-      background:linear-gradient(180deg, #7aa2ff, #4c7cff);color:#fff;border:0;padding:10px 14px;border-radius:12px;cursor:pointer;font-weight:700;
-      box-shadow:0 6px 16px rgba(74,114,255,.35)
-    }
-    button.ghost{background:#192247;box-shadow:none;border:1px solid #2a3a70}
-    button.warn{background:linear-gradient(180deg,#ff9d7a,#ff6d4c)}
-    .grid{display:grid;grid-template-columns:1fr;gap:14px;margin-top:16px}
-    .card{background:#0f1430;border:1px solid var(--line);border-radius:16px;padding:14px}
-    .meta{font-size:12px;color:var(--muted);margin-bottom:8px}
-    .qtext{font-size:15px;line-height:1.6}
-    .ansrow{margin-top:10px;display:flex;gap:8px;align-items:center;flex-wrap:wrap}
-    .ansrow input[type="text"]{
-      flex:1;min-width:180px;padding:10px 12px;border-radius:10px;border:1px solid #314378;background:#0c122b;color:var(--ink)
-    }
-    .badge{display:inline-block;font-size:12px;padding:3px 8px;border-radius:999px;border:1px solid #375394;color:#cfe0ff}
-    .ok{color:var(--ok)} .err{color:var(--err)} .muted{color:var(--muted)} .score{font-weight:800;font-size:18px}
-    details summary{cursor:pointer;color:#cfe0ff} details.card-body>summary{list-style:none;margin:-4px 0 8px}
-    details.card-body>summary::-webkit-details-marker{display:none}
-    .section{padding:8px 12px;margin:4px 0 0;font-weight:700;color:#cfe0ff;border-left:4px solid #375394;opacity:.95}
-    #timer{position:fixed;top:10px;right:20px;font-size:20px;color:#fff;background:#222;padding:6px 14px;border-radius:8px;z-index:9999}
-
-  /* ----------------------------
-     ① 전체 폰트 통일
-  ----------------------------- */
-  * {
-    font-family: 'Pretendard', 'Noto Sans KR', sans-serif !important;
-    color: #1E293B;
-    font-weight: 500;
-  }
-  body {
-    background-color: #FFFFFF !important;
-  }
-   /* ---------------------------
-     텍스트 가독성 향상
-  ---------------------------- */
-  body {
-    color: #1E293B !important; 
-    font-family: 'Pretendard', 'Noto Sans KR', sans-serif;
-    background-color: #FFFFFF !important;
-  }
-  h1, h2, h3, label, select, input, textarea, button {
-    color: #1E293B !important;
-  }
-  .muted {
-    color: #475569 !important; 
-  }
-   /* ---------------------------
-     버튼 스타일 통일
-  ---------------------------- */
-  button {
-    border-radius: 10px;
-    border: 1px solid #CBD5E1;
-    font-weight: 600;
-    transition: all 0.25s ease;
-  }
-  button:hover {
-    transform: translateY(-1px);
-  }
-  button {
-    border: 2px solid #3B82F6 !important; 
-    border-radius: 12px;
-    transition: all 0.2s ease;
-  }
-  button:hover {
-    box-shadow: 0 0 6px rgba(59,130,246,0.4);
-    transform: translateY(-1px);
-  }
-  #gen {
-    background: linear-gradient(180deg, #60A5FA, #3B82F6) !important;
-    color: #fff !important;
-    border-color: #3B82F6 !important;
-  }
-  #gen:hover {
-    background: linear-gradient(180deg, #93C5FD, #60A5FA) !important;
-  }
-  #exam {
-    background: linear-gradient(180deg, #FACC15, #EAB308) !important; 
-    color: #111 !important;
-    border-color: #EAB308 !important;
-  }
-  #exam:hover {
-    background: linear-gradient(180deg, #FDE047, #FACC15) !important;
-    box-shadow: 0 0 10px rgba(234,179,8,0.5);
-  }
-  .ansrow button {
-    border: none;
-    padding: 8px 14px;
-  }
-  .ansrow button:not(.ghost):first-of-type {
-    background: linear-gradient(180deg, #60A5FA, #3B82F6);
-    color: #fff;
-  }
-  .ansrow button:not(.ghost):first-of-type:hover {
-    background: linear-gradient(180deg, #93C5FD, #60A5FA);
-  }
-  .ansrow button.ghost {
-    background: #E2E8F0;
-    color: #334155;
-  }
-  .ansrow button.ghost:hover {
-    background: #CBD5E1;
-  }
-   /* ----------------------------
-     ② 제목 영역 (“실전 모의고사” 포함)
-  ----------------------------- */
-  h1 {
-    font-weight: 700;
-    font-size: 1.6rem;
-    color: #111827 !important;
-  }
-  /* ----------------------------
-     ③ 문항 헤더, 빈칸문제, 번호 강조 (파란색)
-  ----------------------------- */
-  .badge, .section, summary, .meta, .qtext {
-    color: #2563EB !important; 
-    font-weight: 600;
-  }
-  summary span.badge {
-    background-color: rgba(37, 99, 235, 0.1);
-    border: 1px solid #2563EB;
-    color: #2563EB !important;
-    border-radius: 8px;
-    padding: 2px 8px;
-  }
-  .qtext {
-    color: #2563EB !important;
-    line-height: 1.6;
-    font-weight: 500;
-  }
-  /* ----------------------------
-     ④ 입력칸 / 텍스트에어리어 선명화
-  ----------------------------- */
-  input[type="text"], textarea {
-    border: 1.8px solid #93C5FD !important;
-    color: #1E293B !important;
-    font-size: 15px;
-    background-color: #F8FAFC;
-    border-radius: 8px;
-    padding: 8px 10px;
-  }
-  input[type="text"]:focus, textarea:focus {
-    border-color: #2563EB !important;
-    box-shadow: 0 0 6px rgba(37, 99, 235, 0.3);
-    outline: none;
-  }
-  /* ----------------------------
-     ⑤ 카드 타이틀 구분선 색상 개선
-  ----------------------------- */
-  .section {
-    border-left: 4px solid #2563EB !important;
-    background-color: rgba(37, 99, 235, 0.04);
-    padding-left: 10px;
-  }
-  .ansrow button:not(.ghost):first-of-type {
-    background: linear-gradient(180deg, #60A5FA, #3B82F6) !important;
-    color: #fff !important;
-    border: 1px solid #3B82F6 !important;
-    box-shadow: 0 3px 8px rgba(59,130,246,0.3);
-    transition: all 0.25s ease;
-  }
-  .ansrow button:not(.ghost):first-of-type:hover {
-    background: linear-gradient(180deg, #93C5FD, #60A5FA) !important;
-    transform: translateY(-1px);
-    box-shadow: 0 4px 10px rgba(59,130,246,0.4);
-  }
-  .ansrow button.ghost {
-    background: linear-gradient(180deg, #4ADE80, #22C55E) !important;
-    color: #fff !important;
-    border: 1px solid #16A34A !important;
-    box-shadow: 0 3px 8px rgba(34,197,94,0.25);
-    transition: all 0.25s ease;
-  }
-  .ansrow button.ghost:hover {
-    background: linear-gradient(180deg, #86EFAC, #4ADE80) !important;
-    transform: translateY(-1px);
-    box-shadow: 0 4px 10px rgba(34,197,94,0.4);
-  }
-  .ansrow button {
-    font-family: 'Pretendard', 'Noto Sans KR', sans-serif !important;
-    border-radius: 10px;
-    font-weight: 600;
-    padding: 8px 14px;
-  }
-  .foot {
-    display: none !important;
-    visibility: hidden !important;
-  }
-  @media (max-width: 640px) {
-    button {
       width: 100%;
-      margin-top: 6px;
+      height: 220px;
+      border-radius: var(--radius-lg);
+      background: url('https://images.unsplash.com/photo-1519681393784-d120267933ba?auto=format&fit=crop&w=1200&q=80') center/cover no-repeat;
+      margin-bottom: 24px;
+      display: flex;
+      align-items: flex-end;
+      padding: 30px;
+      box-shadow: var(--shadow-md);
+      overflow: hidden;
     }
-  }
-</style>
+    .hero-banner::before {
+      content: ''; position: absolute; top: 0; left: 0; right: 0; bottom: 0;
+      background: linear-gradient(to top, rgba(15,23,42,0.85) 0%, rgba(15,23,42,0.2) 100%);
+    }
+    .hero-banner h1 {
+      position: relative;
+      color: #ffffff;
+      margin: 0;
+      font-size: 28px;
+      font-weight: 800;
+      letter-spacing: -0.5px;
+      text-shadow: 0 2px 4px rgba(0,0,0,0.5);
+    }
 
-<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard-dynamic-subset.css">
+    /* --- 패널 및 카드 기본 --- */
+    .panel, .card {
+      background: var(--surface);
+      border-radius: var(--radius-lg);
+      padding: 28px;
+      box-shadow: var(--shadow-md);
+      border: 1px solid rgba(255,255,255,0.8); /* 입체감 */
+      margin-bottom: 20px;
+    }
 
-<style id="light-override">
-  :root{ --bg:#FFFFFF; --text:#1F2937; --line:#E5E7EB; --card:#FFFFFF; }
-  html,body{height:100%;}
-  body{
-    background:var(--bg) !important;
-    color:var(--text) !important;
-    font-family:'Pretendard', system-ui, -apple-system, Segoe UI, Roboto,
-                 'Apple SD Gothic Neo', 'Noto Sans KR', sans-serif !important;
-    -webkit-text-size-adjust:100%; text-rendering:optimizeLegibility;
-  }
-  .panel, .card{
-    background:var(--card) !important;
-    border:1px solid var(--line) !important;
-    box-shadow:0 12px 30px rgba(17,24,39,.08) !important;
-    border-radius:24px !important;
-    color:var(--text) !important;
-  }
-  select, input[type="number"], input[type="text"], textarea, button{
-    background:#F9FAFB !important; color:var(--text) !important;
-    border:1px solid var(--line) !important;
-    transition:border-color .2s, box-shadow .2s, background .2s;
-  }
-  select:focus, input:focus, textarea:focus, button:focus{
-    outline:none !important; border-color:#3B82F6 !important;
-    box-shadow:0 0 0 3px rgba(59,130,246,.25) !important; background:#fff !important;
-  }
-  @media (max-width: 640px){
-    .row{display:flex;flex-wrap:wrap;gap:8px}
-    .row > *{flex:1 1 100%; min-width:0}
-    select, input[type="number"], input[type="text"], textarea, button{width:100% !important}
-  }
-</style>
+    .card {
+      padding: 24px;
+      border: 1px solid var(--border);
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+    .card:hover {
+      box-shadow: var(--shadow-lg);
+      transform: translateY(-2px);
+    }
 
-<style id="dedupe-light-fix">
-  :root{
-    --bg:#FFFFFF; --text:#1E293B; --line:#E5E7EB; --card:#FFFFFF;
-    --blue:#3B82F6; --blue-2:#60A5FA; --blue-3:#93C5FD;
-    --yellow-1:#FDE047; --yellow-2:#FACC15;
-    --green-1:#4ADE80; --green-2:#22C55E; --green-3:#16A34A;
-  }
-  html,body{height:100%}
-  body{ background:var(--bg) !important; color:var(--text) !important; font-family:'Pretendard','Noto Sans KR',system-ui,-apple-system,Segoe UI,Roboto,sans-serif !important; }
-  .panel,.card{ background:var(--card) !important; border:1px solid var(--line) !important; color:var(--text) !important; box-shadow:0 12px 30px rgba(17,24,39,.08) !important; border-radius:24px !important; }
-  select, input[type="number"], input[type="text"], textarea, button{ background:#F9FAFB !important; color:var(--text) !important; border:1px solid var(--line) !important; transition:border-color .2s, box-shadow .2s, background .2s; border-radius:12px; }
-  select:focus, input:focus, textarea:focus, button:focus{ outline:none !important; border-color:var(--blue) !important; box-shadow:0 0 0 3px rgba(59,130,246,.25) !important; background:#fff !important; }
-  body button{ border:2px solid var(--blue) !important; font-weight:700; }
-  body button:hover{ transform:translateY(-1px); box-shadow:0 0 8px rgba(59,130,246,.3) }
-  #gen{ background:linear-gradient(180deg, var(--blue-2), var(--blue)) !important; color:#fff !important; border-color:var(--blue) !important; }
-  #gen:hover{ background:linear-gradient(180deg, var(--blue-3), var(--blue-2)) !important }
-  #exam{ background:linear-gradient(180deg, var(--yellow-1), var(--yellow-2)) !important; color:#111 !important; border-color:var(--yellow-2) !important; }
-  #exam:hover{ background:linear-gradient(180deg, #FEF08A, var(--yellow-1)) !important; box-shadow:0 0 10px rgba(250,204,21,.5); }
-  .ansrow button{ padding:8px 14px; border-radius:10px; }
-  .ansrow button:not(.ghost):first-of-type{ background:linear-gradient(180deg, var(--blue-2), var(--blue)) !important; color:#fff !important; border:1px solid var(--blue) !important; box-shadow:0 3px 8px rgba(59,130,246,.3); }
-  .ansrow button:not(.ghost):first-of-type:hover{ background:linear-gradient(180deg, var(--blue-3), var(--blue-2)) !important; }
-  .ansrow button.ghost{ background:linear-gradient(180deg, var(--green-1), var(--green-2)) !important; color:#fff !important; border:1px solid var(--green-3) !important; box-shadow:0 3px 8px rgba(34,197,94,.25); }
-  .ansrow button.ghost:hover{ background:linear-gradient(180deg, #86EFAC, var(--green-1)) !important; }
-  .wrap > .muted:last-of-type{ display:none !important; visibility:hidden !important; }
-  @media (max-width:640px){ .row{display:flex;flex-wrap:wrap;gap:8px} .row > *{flex:1 1 100%; min-width:0} button{width:100%; margin-top:6px} }
-</style>
+    /* --- 폼 & 컨트롤 영역 --- */
+    .controls-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+      gap: 16px;
+    }
+    .control-group label {
+      display: block;
+      font-size: 13px;
+      font-weight: 700;
+      color: var(--text-muted);
+      margin-bottom: 6px;
+    }
+    select, input[type="number"], input[type="text"], textarea {
+      width: 100%;
+      background: var(--input-bg);
+      border: 1px solid var(--border);
+      color: var(--text-main);
+      padding: 12px 14px;
+      border-radius: var(--radius-md);
+      font-size: 15px;
+      font-family: inherit;
+      font-weight: 500;
+      transition: all 0.2s ease;
+    }
+    select:focus, input:focus, textarea:focus {
+      outline: none;
+      border-color: var(--primary);
+      background: #ffffff;
+      box-shadow: 0 0 0 4px rgba(79, 70, 229, 0.15);
+    }
 
-<script>
-  document.addEventListener('DOMContentLoaded', ()=>{
-    const footNote = Array.from(document.querySelectorAll('.wrap > .muted'))
-      .find(el => el.textContent.includes('자동 출제는 BIBLE'));
-    if (footNote) footNote.style.display = 'none';
-  });
-</script>
+    /* --- 세련된 버튼 스타일 --- */
+    .actions-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin-top: 24px;
+      padding-top: 24px;
+      border-top: 1px solid var(--border);
+    }
+    button {
+      background: var(--primary);
+      color: white;
+      border: none;
+      padding: 12px 20px;
+      border-radius: var(--radius-md);
+      font-weight: 700;
+      font-size: 15px;
+      cursor: pointer;
+      display: inline-flex;
+      justify-content: center;
+      align-items: center;
+      transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+      box-shadow: 0 4px 6px rgba(79, 70, 229, 0.2);
+    }
+    button:hover {
+      background: var(--primary-hover);
+      transform: translateY(-2px);
+      box-shadow: 0 6px 12px rgba(79, 70, 229, 0.3);
+    }
+    button:active { transform: translateY(0); }
 
-<style>
-  button.warn{ background: linear-gradient(180deg, #f87171, #ef4444) !important; color:#fff !important; border:1px solid #dc2626 !important; box-shadow:0 3px 8px rgba(239,68,68,.3); transition:all .25s ease; }
-  button.warn:hover{ background: linear-gradient(180deg, #fca5a5, #f87171) !important; transform: translateY(-1px); }
-</style>
+    /* 서브 버튼 (회색) */
+    button.ghost {
+      background: #FFFFFF;
+      color: var(--text-main);
+      border: 1px solid #CBD5E1;
+      box-shadow: var(--shadow-sm);
+    }
+    button.ghost:hover {
+      background: #F8FAFC;
+      border-color: #94A3B8;
+      box-shadow: var(--shadow-md);
+    }
 
-<style id="meta-header-fix">
-  .section { color: #111 !important; font-weight: 700 !important; }
-  .badge, .meta, details.card-body > summary { color: #111 !important; }
-  .badge { background: #f3f4f6 !important; border-color: #d1d5db !important; }
-  .guide-text { text-align: left; font-family: inherit; line-height: 1.4; color: #1e3a8a; background: #eff6ff; border-left: 4px solid #3b82f6; padding: 4px 8px; margin: 6px 0 10px; border-radius: 4px; }
-  .guide-text strong { color: #1E293B; }
-</style>
+    /* 실전 모의고사 전용 버튼 (황금색) */
+    button#exam {
+      background: linear-gradient(135deg, #F59E0B, #D97706);
+      box-shadow: 0 4px 10px rgba(245, 158, 11, 0.3);
+    }
+    button#exam:hover {
+      background: linear-gradient(135deg, #FCD34D, #F59E0B);
+      box-shadow: 0 6px 15px rgba(245, 158, 11, 0.4);
+    }
 
+    /* 위험/정답보기 버튼 (빨간색) */
+    button.warn { background: var(--danger); box-shadow: 0 4px 6px rgba(239, 68, 68, 0.2); }
+    button.warn:hover { background: #DC2626; box-shadow: 0 6px 12px rgba(239, 68, 68, 0.3); }
+
+    /* --- 문제 카드 내부 디자인 --- */
+    summary { cursor: pointer; list-style: none; outline: none; }
+    summary::-webkit-details-marker { display: none; }
+    .badge {
+      display: inline-block;
+      background: #EEF2FF;
+      color: var(--primary);
+      padding: 4px 10px;
+      border-radius: 20px;
+      font-size: 12px;
+      font-weight: 800;
+      margin-right: 8px;
+      vertical-align: middle;
+    }
+    .meta-title {
+      font-size: 16px;
+      font-weight: 700;
+      color: var(--text-main);
+      display: inline-block;
+      vertical-align: middle;
+    }
+    
+    .guide-text {
+      background: var(--secondary);
+      border-left: 4px solid var(--primary);
+      padding: 12px 16px;
+      border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+      font-size: 13px;
+      color: var(--text-muted);
+      margin: 16px 0;
+    }
+    .guide-text strong { color: var(--text-main); font-weight: 700; }
+
+    .qtext {
+      font-size: 17px;
+      line-height: 1.7;
+      color: var(--text-main);
+      font-weight: 500;
+      margin: 16px 0;
+    }
+
+    /* --- 답변 영역 --- */
+    .ansrow {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      align-items: center;
+      margin-top: 20px;
+    }
+    .ansrow input[type="text"] {
+      flex: 1;
+      min-width: 150px;
+    }
+    .ansrow button { padding: 10px 16px; font-size: 14px; }
+
+    /* 채점 결과 텍스트 */
+    .judge, .model {
+      margin-top: 16px;
+      padding: 16px;
+      border-radius: var(--radius-md);
+      background: #F8FAFC;
+      border: 1px solid var(--border);
+      font-size: 15px;
+    }
+    .err { color: var(--danger); font-weight: 700; text-decoration: underline; text-decoration-color: rgba(239,68,68,0.3); text-underline-offset: 4px; }
+
+    /* --- 기타 UI --- */
+    .section-title {
+      font-size: 20px;
+      font-weight: 800;
+      color: var(--text-main);
+      margin: 32px 0 16px;
+      display: flex;
+      align-items: center;
+    }
+    .section-title::before {
+      content: ''; display: inline-block; width: 6px; height: 20px; background: var(--primary); border-radius: 4px; margin-right: 10px;
+    }
+    
+    #timer {
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      background: rgba(15, 23, 42, 0.9);
+      backdrop-filter: blur(8px);
+      color: white;
+      font-weight: 700;
+      font-size: 18px;
+      padding: 10px 20px;
+      border-radius: 100px;
+      z-index: 9999;
+      box-shadow: var(--shadow-lg);
+    }
+    
+    .score-wrap { font-size: 18px; font-weight: 800; color: var(--primary); }
+
+    /* 모바일 최적화 */
+    @media (max-width: 640px) {
+      .hero-banner { height: 160px; padding: 20px; }
+      .hero-banner h1 { font-size: 22px; }
+      .panel, .card { padding: 20px; }
+      .actions-row { flex-direction: column; }
+      .actions-row button { width: 100%; }
+      .ansrow input[type="text"] { min-width: 100%; }
+    }
+  </style>
 </head>
 <body>
   <div class="wrap">
-    <div class="panel">
-      <div class="header-banner"></div>
-      
-      <h1 style="margin:4px 0 12px">실전 모의고사 — 요한계시록(7~12장)</h1>
+    
+    <div class="hero-banner">
+      <h1>실전 모의고사 — 요한계시록(7~12장)</h1>
+    </div>
 
-      <div class="row">
-        <div>
-          <label>출제 범위</label><br/>
+    <div class="panel">
+      <div class="controls-grid">
+        <div class="control-group">
+          <label>출제 범위</label>
           <select id="rangeMode">
             <option value="single">단일 장</option>
             <option value="range" selected>장 범위</option>
           </select>
         </div>
 
-        <div id="singleBox">
-          <label>장(Chapter)</label><br/>
+        <div class="control-group" id="singleBox" style="display:none">
+          <label>장(Chapter)</label>
           <select id="chapter"></select>
         </div>
 
-        <div id="rangeBox" style="display:none">
-          <div>
-            <label>시작 장</label><br/>
-            <select id="startCh"></select>
-          </div>
-          <div>
-            <label>끝 장</label><br/>
-            <select id="endCh"></select>
-          </div>
+        <div class="control-group" id="rangeBox_start">
+          <label>시작 장</label>
+          <select id="startCh"></select>
+        </div>
+        <div class="control-group" id="rangeBox_end">
+          <label>끝 장</label>
+          <select id="endCh"></select>
         </div>
 
-        <div>
-          <label>문항 수</label><br/>
+        <div class="control-group">
+          <label>문항 수</label>
           <input id="count" type="number" min="1" max="200" value="25"/>
         </div>
 
-        <div>
-          <label>문항 유형</label><br/>
+        <div class="control-group">
+          <label>문항 유형</label>
           <select id="modesel">
             <option value="mix" selected>혼합(빈칸+서술)</option>
             <option value="cloze">빈칸만</option>
@@ -365,55 +340,54 @@
           </select>
         </div>
 
-        <div>
-          <label>난이도</label><br/>
+        <div class="control-group">
+          <label>난이도</label>
           <select id="level">
-            <option value="easy">쉬움(빈칸 2)</option>
-            <option value="normal" selected>보통(빈칸 4)</option>
-            <option value="hard">어려움(빈칸 6)</option>
-            <option value="extreme">극악(30%)</option>
+            <option value="easy">쉬움 (빈칸 조금)</option>
+            <option value="normal" selected>보통 (적절히)</option>
+            <option value="hard">어려움 (빈칸 많음)</option>
+            <option value="extreme">극악 (하드코어)</option>
           </select>
         </div>
+      </div>
 
-        <div class="row">
-          <button id="gen">문제 출제</button>
-          <button id="regen" class="ghost">다시 섞기</button>
-          <button id="exam" class="ghost">실전 모의고사</button>
-          <button id="printBtn" class="ghost">프린트</button>
+      <div class="actions-row">
+        <button id="gen">📝 문제 출제</button>
+        <button id="regen" class="ghost">🔄 다시 섞기</button>
+        <button id="printBtn" class="ghost">🖨️ 프린트</button>
+        <button id="exam">⏱️ 실전 모의고사 시작</button>
+      </div>
+    </div>
+
+    <div id="board" style="display:none"></div>
+
+    <div id="result" class="panel" style="margin-top:24px; display:none">
+      <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:16px;">
+        <div class="score-wrap" id="scoreWrap">
+          🎯 내 점수: <span id="score" style="font-size:24px;">0</span> / <span id="max">0</span>
+        </div>
+        <div>
+          <button id="retryWrong" class="ghost" style="display:none; background:var(--primary); color:white; border:none;">
+            오답만 다시 풀기
+          </button>
+          <button id="submitExam" class="warn" style="display:none;">최종 제출하기</button>
         </div>
       </div>
+      <div style="color:var(--text-muted); font-size:13px; margin-top:12px;" id="examGuideText">
+        * 실전 모드: 40분 제한, 제출 후 정답 공개 & 오답 복습 가능
+      </div>
     </div>
 
-    <div id="board" class="grid" style="display:none"></div>
-
-    <div id="result" class="panel" style="margin-top:16px; display:none">
-      <div class="row" style="justify-content:space-between; align-items:center">
-        <div id="scoreWrap">점수: <span id="score">0</span> / <span id="max">0</span></div>
-      </div>
-      
-      <div style="text-align:center; margin-top:10px;">
-        <button id="retryWrong" class="ghost" style="display:none; background:linear-gradient(180deg, var(--blue-2), var(--blue)); color:#fff; border:1px solid var(--blue); border-radius:12px; padding:10px 24px;">
-          오답만 다시 풀기
-        </button>
-      </div>
-
-      <button id="submitExam" class="warn" style="display:none; margin-top:8px;">제출하기</button>
-      <div class="muted" style="margin-top:8px">실전 모드: 40분 제한, 제출 후 정답 공개 & 오답만 재도전</div>
-      <div id="reviewPanel" style="margin-top:12px"></div>
-    </div>
-
-    <div class="muted" style="margin-top:8px">
-      * 자동 출제는 BIBLE(요한계시록 7~12장)을 기반으로 합니다. <code>data.js</code>가 같은 폴더에 있어야 합니다.
+    <div style="text-align:center; color:var(--text-muted); font-size:13px; margin-top:32px;">
+      BIBLE (요한계시록 7~12장) 엔진 기반 
     </div>
   </div>
 
   <script src="data.js"></script>
 
   <script>
-  // ===== 안전가드 =====
-  if(!window.BIBLE){ alert("⚠️ BIBLE이 없습니다. data.js 경로/인코딩을 확인하세요."); }
+  if(!window.BIBLE){ alert("⚠️ BIBLE 데이터가 없습니다. data.js 파일이 같은 폴더에 있는지 확인하세요."); }
 
-  // ===== 유틸 =====
   const $ = s=>document.querySelector(s);
   const normalize = s => (s||"").toString().trim().replace(/\s+/g,"").replace(/[^\p{L}\p{N}]+/gu,"").toLowerCase();
   const shuffle = arr => arr.map(v=>[Math.random(),v]).sort((a,b)=>a[0]-b[0]).map(x=>x[1]);
@@ -422,30 +396,25 @@
     return clean?clean.split(" "):[];
   };
 
-  // 다음 카드로 스크롤 + 포커스 이동
   function goToNextCard(fromCard){
     const curr = parseInt(fromCard?.dataset?.idx || "-1", 10);
     const next = document.querySelector(`.card[data-idx="${curr+1}"]`);
-    if(!next) return; // 마지막 문항이면 무시
-
+    if(!next) return; 
     const det = next.querySelector('details.card-body');
     if(det && !det.open) det.open = true;
-
-    const target = next.querySelector('input[type="text"]') 
-                || next.querySelector('textarea') 
-                || next.querySelector('button');
+    const target = next.querySelector('input[type="text"]') || next.querySelector('textarea') || next.querySelector('button');
     next.scrollIntoView({behavior:'smooth', block:'center'});
     setTimeout(()=> target?.focus(), 160);
   }
 
-  // ===== DOM =====
   const board      = $('#board');
   const result     = $('#result');
   const scoreEl    = $('#score');
   const maxEl      = $('#max');
   const rangeMode  = $('#rangeMode');
   const singleBox  = $('#singleBox');
-  const rangeBox   = $('#rangeBox');
+  const startChBox = $('#rangeBox_start');
+  const endChBox   = $('#rangeBox_end');
   const chapterSel = $('#chapter');
   const startChSel = $('#startCh');
   const endChSel   = $('#endCh');
@@ -455,11 +424,9 @@
   const countInput = $('#count');
   const modeSel    = $('#modesel');
   const levelSel   = $('#level');
-  const retryBtn   = document.getElementById('retryWrong');
+  const retryBtn   = $('#retryWrong');
   const controls   = [rangeMode, chapterSel, startChSel, endChSel, countInput, modeSel, levelSel];
-  const printBtn   = document.getElementById('printBtn');
   
-  // ===== 상태 =====
   const STOP_KO = new Set(["은","는","이","가","을","를","에","에서","에게","으로","와","과","또","그리고","그러나","이는","혹은","너희","그의","그것"]);
   const MIX_CLOZE_RATIO = 0.30; 
   const MIX_ESSAY_RATIO = 0.70; 
@@ -470,7 +437,6 @@
   let examSubmitted = false;
   let examTimer = null;
 
-  // ===== 초기 옵션 채우기 + 기본값 (✅ 7~12장으로 수정) =====
   (function initUI(){
     const fill = (sel, from=7, to=12, def=null)=>{
       sel.innerHTML="";
@@ -480,39 +446,27 @@
       }
       if(def!=null) sel.value=String(def);
     };
-    // 옵션 채우기 (7~12장만 표시)
     fill(chapterSel, 7, 12, 7);   
     fill(startChSel, 7, 12, 7);
     fill(endChSel, 7, 12, 12);
 
-    // 기본값: 장 범위 / 7~12장 / 25문항
     rangeMode.value  = 'range';
     chapterSel.value = '7';
     countInput.value = '25';
-
-    // UI 표시 상태 동기화
-    singleBox.style.display = 'none';
-    rangeBox.style.display  = '';
   })();
 
   rangeMode.addEventListener('change', ()=>{
     const useRange = rangeMode.value==='range';
-    singleBox.style.display = useRange ? 'none' : '';
-    rangeBox.style.display  = useRange ? '' : 'none';
+    singleBox.style.display = useRange ? 'none' : 'block';
+    startChBox.style.display  = useRange ? 'block' : 'none';
+    endChBox.style.display  = useRange ? 'block' : 'none';
   });
 
-  document.getElementById('gen').addEventListener('click', generate);
-  document.getElementById('regen').addEventListener('click', ()=>generate(true));
-
-  retryBtn && (retryBtn.style.display = examRunning ? 'none' : 'inline-block');
-
-  // ===== BIBLE → 랜덤 절 묶음 로직 적용 (✅ 핵심 변경 부분) =====
+  // ===== BIBLE → 랜덤 절 묶음 로직 =====
   function collectVerses(chapters){
     const out=[]; if(typeof BIBLE==="undefined") return out;
     chapters.forEach(ch=>{
       const obj=BIBLE[+ch]; if(!obj) return;
-      
-      // 1. 해당 장의 모든 절을 숫자 순서대로 배열에 담기
       let verses = [];
       for(const [k,v] of Object.entries(obj)){
         const vno=parseInt(k,10);
@@ -520,18 +474,15 @@
       }
       verses.sort((a,b)=>a.vno - b.vno);
 
-      // 2. 1절 ~ 3절씩 무작위로 묶기
       let i = 0;
       while(i < verses.length) {
-        let size = Math.floor(Math.random() * 3) + 1; // 1, 2, 또는 3 뽑기
+        let size = Math.floor(Math.random() * 3) + 1; 
         let chunk = verses.slice(i, i + size);
-        
         if (chunk.length > 0) {
           let startV = chunk[0].vno;
           let endV = chunk[chunk.length-1].vno;
           let vLabel = startV === endV ? `${startV}` : `${startV}~${endV}`;
           let combinedText = chunk.map(x => x.v).join(" ");
-          
           out.push([+ch, vLabel, combinedText]);
         }
         i += size;
@@ -540,13 +491,13 @@
     return out;
   }
 
-  // ===== 빈칸 생성 =====
   function blanksByLevel(wordsLen, level){
     if(level==="easy")   return Math.min(2, Math.max(2, wordsLen>=2?2:1));
     if(level==="normal") return Math.min(4, Math.max(2, Math.floor(wordsLen*0.18) || 4));
     if(level==="hard")   return Math.min(6, Math.max(3, Math.floor(wordsLen*0.25) || 6));
     return Math.max(2, Math.round(wordsLen*0.30)); 
   }
+  
   function makeClozeFromVerse(ch, vno, text, level){
     const tokens = tokenizeKo(text);
     const cand = [];
@@ -562,8 +513,8 @@
     return { type:"cloze", ch:String(ch), ref:`계 ${ch}:${vno}`, prompt:shown.join(" "), blanks };
   }
 
-  // ===== 채점/렌더 공통 =====
   function updateScore(){ scoreEl.textContent=String(SCORES.got); maxEl.textContent=String(SCORES.max); }
+  
   function renderQuestions(list){
     board.innerHTML = '';
     const isMix = (modeSel.value === 'mix');
@@ -571,270 +522,183 @@
     const essays = list.filter(q => q.type === 'essay');
 
     const addSectionHeader = (title) => {
-      const h = document.createElement('div'); h.className = 'section'; h.textContent = title; board.appendChild(h);
+      const h = document.createElement('div'); h.className = 'section-title'; h.textContent = title; board.appendChild(h);
     };
 
     const renderBlock = (arr, offset=0) => {
-  arr.forEach((q, idx) => {
-    const card = document.createElement('div');
-    card.className = 'card';
-    card.dataset.idx = String(offset + idx);
+      arr.forEach((q, idx) => {
+        const card = document.createElement('div');
+        card.className = 'card';
+        card.dataset.idx = String(offset + idx);
 
-    const details = document.createElement('details');
-    details.className = 'card-body';
-    details.open = true;
+        const details = document.createElement('details');
+        details.className = 'card-body';
+        details.open = true;
 
-    const metaLine = `${q.type==="cloze"?"빈칸":"서술"} · ${q.ref || '-'} · ${q.ch || '-'}장`;
-    const summary = document.createElement('summary');
-    summary.innerHTML = `<span class="badge">${q.type==="cloze"?"빈칸문제":"서술형"}</span> 문항 ${offset+idx+1} · ${metaLine}`;
-    details.appendChild(summary);
+        const metaLine = `${q.type==="cloze"?"빈칸":"서술"} · ${q.ref || '-'} · ${q.ch || '-'}장`;
+        const summary = document.createElement('summary');
+        summary.innerHTML = `<span class="badge">${q.type==="cloze"?"빈칸":"서술"}</span><span class="meta-title">문항 ${offset+idx+1} <span style="color:var(--text-muted);font-weight:500;font-size:14px;">(${metaLine})</span></span>`;
+        details.appendChild(summary);
 
-    const guide = document.createElement('div');
-    guide.className = 'guide-text';
-    guide.innerHTML = (q.type === "cloze")
-      ? '💡 엔터 한 번은 채점, 두 번은 초기화<strong>탭(Tab)키나 스페이스(Space)를 누르면 다음 칸으로 이동</strong>'
-      : '💡 엔터 한 번은 채점, 두 번은 초기화';
+        const guide = document.createElement('div');
+        guide.className = 'guide-text';
+        guide.innerHTML = (q.type === "cloze")
+          ? '💡 <strong>[작성 팁]</strong> 탭(Tab)키나 스페이스를 누르면 다음 빈칸으로 쏙 넘어갑니다.'
+          : '💡 <strong>[작성 팁]</strong> 정확한 구절을 한 번에 입력해 보세요.';
+        details.appendChild(guide);
 
-    guide.style.fontSize = '14px';
-    guide.style.color = '#1e3a8a'; 
-    guide.style.margin = '6px 0 10px';
-    guide.style.fontWeight = '500';
-    details.appendChild(guide);
+        const qt = document.createElement('div');
+        qt.className = 'qtext';
+        qt.textContent = (q.type==="cloze") ? q.prompt : (q.ask || '구절을 정확히 적으세요.');
+        details.appendChild(qt);
 
-    const qt = document.createElement('div');
-    qt.className = 'qtext';
-    qt.textContent = (q.type==="cloze") ? q.prompt : (q.ask || '구절을 정확히 적으세요.');
-    details.appendChild(qt);
+        const ans = document.createElement('div');
+        ans.className = 'ansrow';
 
-    const ans = document.createElement('div');
-    ans.className = 'ansrow';
+        if (q.type === 'cloze') {
+          const inputs = (q.blanks || []).map((_, i) => {
+            const inp = document.createElement('input');
+            inp.type = 'text'; inp.placeholder = `빈칸 ${i+1}`; inp.dataset.idx = i;
+            return inp;
+          });
+          inputs.forEach(inp => ans.appendChild(inp));
+          
+          inputs.forEach((inp, i) => {
+            let spaceDown = false;
+            let composing = false;
+            inp.addEventListener('compositionstart', () => { composing = true; });
+            inp.addEventListener('compositionend',   () => { composing = false; });
+            inp.addEventListener('keydown', (e) => {
+              if ((e.code === 'Space' || e.key === ' ') && !e.isComposing && !composing) {
+                if (e.repeat) { e.preventDefault(); return; }
+                spaceDown = true; e.preventDefault();
+              }
+            });
+            inp.addEventListener('keyup', (e) => {
+              if ((e.code === 'Space' || e.key === ' ') && spaceDown && !composing) {
+                spaceDown = false; e.preventDefault();
+                inp.value = (inp.value || '').replace(/\s+$/, '');
+                const next = inputs[i+1] || ans.querySelector('button'); 
+                if (next) setTimeout(() => next.focus(), 0); 
+              }
+            });
+          });
 
-    if (q.type === 'cloze') {
-      const inputs = (q.blanks || []).map((_, i) => {
-        const inp = document.createElement('input');
-        inp.type = 'text';
-        inp.placeholder = `(${i+1})`;
-        inp.dataset.idx = i;
-        return inp;
-      });
-      inputs.forEach(inp => ans.appendChild(inp));
-      
-      const golds = (q.blanks || []).map(w => normalize(w));
+          const gradeCloze = () => {
+            let ok = 0;
+            inputs.forEach((inp, i) => {
+              const user = normalize(inp.value), gold = normalize(q.blanks[i]);
+              inp.style.borderColor = (user === gold) ? "var(--success)" : "var(--danger)";
+              if (user === gold) ok++;
+            });
+            const old = card.querySelector('.judge'); if (old) old.remove();
+            const show = document.createElement('div'); show.className = 'judge';
+            const pairs = q.blanks.map((a, i) => {
+              const u = normalize(inputs[i].value || ""), g = normalize(a);
+              return u===g ? `<strong style="color:var(--success)">${a}</strong>` : `<span class="err">${a}</span>`;
+            }).join(" / ");
+            show.innerHTML = `<div style="font-weight:800; color:${ok===q.blanks.length?'var(--success)':'var(--danger)'}">${ok===q.blanks.length?'✅ 정답입니다!':'❌ 다시 확인해보세요!'}</div>
+                              <div style="margin-top:8px; color:var(--text-muted)"><strong>올바른 답:</strong> ${pairs}</div>`;
+            details.appendChild(show);
 
-      inputs.forEach((inp, i) => {
-        let spaceDown = false;
-        let composing = false;
+            if (card.dataset.scored !== "1") {
+              if (ok === q.blanks.length) SCORES.got += 1;
+              card.dataset.scored = "1"; updateScore();
+            }
+            if (ok === q.blanks.length) setTimeout(()=>goToNextCard(card), 120);
+          };
 
-        inp.addEventListener('compositionstart', () => { composing = true; });
-        inp.addEventListener('compositionend',   () => { composing = false; });
+          const btn = document.createElement('button'); btn.textContent = '채점하기'; btn.onclick = gradeCloze; ans.appendChild(btn);
+          const btnClear = document.createElement('button'); btnClear.textContent = '지우기'; btnClear.className = 'ghost';
+          btnClear.onclick = () => {
+            inputs.forEach(inp => { inp.value = ""; inp.style.borderColor = "var(--border)"; });
+            const old = card.querySelector('.judge'); if (old) old.remove();
+            if (card.dataset.scored === "1") { card.dataset.scored = "0"; updateScore(); }
+          };
+          ans.appendChild(btnClear);
 
-        inp.addEventListener('keydown', (e) => {
-          if ((e.code === 'Space' || e.key === ' ') && !e.isComposing && !composing) {
-            if (e.repeat) { e.preventDefault(); return; }
-            spaceDown = true;
-            e.preventDefault();
-          }
-        });
+          let enterCount = 0, enterTimer = null;
+          inputs.forEach(inp => {
+            inp.addEventListener('keydown', (e) => {
+              if (e.key === 'Enter') {
+                e.preventDefault(); enterCount++; clearTimeout(enterTimer);
+                enterTimer = setTimeout(() => {
+                  if (enterCount === 1) gradeCloze(); else btnClear.click();
+                  enterCount = 0;
+                }, 300);
+              }
+            });
+          });
+          card.dataset.qtype = 'cloze'; card.dataset.blanks = (q.blanks || []).join('|||');
 
-        inp.addEventListener('keyup', (e) => {
-          if ((e.code === 'Space' || e.key === ' ') && spaceDown && !composing) {
-            spaceDown = false;
-            e.preventDefault();
-            inp.value = (inp.value || '').replace(/\s+$/, '');
-            const next = inputs[i+1] || ans.querySelector('button'); 
-            if (next) setTimeout(() => next.focus(), 0); 
-          }
-        });
-      });
+        } else {
+          const tx = document.createElement('textarea'); tx.rows = 4; tx.placeholder = "이곳에 말씀을 작성해주세요."; ans.appendChild(tx);
+          card.dataset.qtype = 'essay'; card.dataset.model = (q.model || "");
 
-      const gradeCloze = () => {
-        let ok = 0;
-        inputs.forEach((inp, i) => {
-          const user = normalize(inp.value), gold = normalize(q.blanks[i]);
-          inp.style.borderColor = (user === gold) ? "#2fbf71" : "#ff6b6b";
-          if (user === gold) ok++;
-        });
-        const old = card.querySelector('.judge'); if (old) old.remove();
-        const show = document.createElement('div'); show.className = 'judge'; show.style.marginTop = '8px';
-        const pairs = q.blanks.map((a, i) => {
-          const u = normalize(inputs[i].value || ""), g = normalize(a);
-          return u===g ? `<strong>${a}</strong>` : `<span class="err">${a}</span>`;
-        }).join(" / ");
-        show.innerHTML = `<div>${ok===q.blanks.length?'✅ 정답!':'❌ 오답!'}</div>
-                          <div class="muted" style="margin-top:6px"><strong>정답:</strong> ${pairs}</div>`;
-        details.appendChild(show);
+          const judgeEssay = () => {
+            const old = card.querySelector('.model'); if (old) old.remove();
+            const judge = document.createElement('div'); judge.className = 'model';
+            const gold = (q.model || "").trim(); const user = (tx.value || "").trim();
+            const ok = normalize(user) === normalize(gold);
 
-        if (card.dataset.scored !== "1") {
-          if (ok === q.blanks.length) SCORES.got += 1;
-          card.dataset.scored = "1"; updateScore();
-        }
-        if (ok === q.blanks.length) {
-          setTimeout(()=>goToNextCard(card), 120);
-        }
-      };
+            let diffHtml = gold;
+            if (!ok) {
+              const gWords = gold.split(/\s+/); const uWords = user.split(/\s+/);
+              diffHtml = gWords.map((w, i) => normalize(w) === normalize(uWords[i] || "") ? w : `<span class="err">${w}</span>`).join(" ");
+            }
+            judge.innerHTML = `<div style="font-weight:800; color:${ok?'var(--success)':'var(--danger)'}">${ok?'✅ 완벽합니다!':'❌ 오답입니다!'}</div>
+                               ${!ok ? `<div style="margin-top:8px; color:var(--text-muted)"><strong>비교 확인:</strong> ${diffHtml}</div>` : ''}`;
+            details.appendChild(judge);
 
-      const btn = document.createElement('button');
-      btn.textContent = '채점';
-      btn.addEventListener('click', gradeCloze);
-      ans.appendChild(btn);
+            if (card.dataset.scored !== "1") { if (ok) SCORES.got += 1; card.dataset.scored = "1"; updateScore(); }
+            if (ok) setTimeout(()=>goToNextCard(card), 120);
+          };
 
-      const btnClear = document.createElement('button');
-      btnClear.textContent = '초기화';
-      btnClear.className = 'ghost';
-      btnClear.addEventListener('click', () => {
-        inputs.forEach(inp => { inp.value = ""; inp.style.borderColor = "#314378"; });
-        const old = card.querySelector('.judge'); if (old) old.remove();
-        if (card.dataset.scored === "1") { card.dataset.scored = "0"; updateScore(); }
-      });
-      ans.appendChild(btnClear);
+          const btnJudge = document.createElement('button'); btnJudge.textContent = '채점하기'; btnJudge.onclick = judgeEssay; ans.appendChild(btnJudge);
+          const btnShow = document.createElement('button'); btnShow.textContent = '정답 보기'; btnShow.className = 'warn';
+          btnShow.onclick = () => {
+            const old = card.querySelector('.model'); if (old) old.remove();
+            const model = document.createElement('div'); model.className = 'model';
+            model.innerHTML = `<strong style="color:var(--text-main)">[모범 답안]</strong><div style="margin-top:6px">${q.model}</div>`;
+            details.appendChild(model);
+          };
+          ans.appendChild(btnShow);
 
-      let enterCount = 0, enterTimer = null;
-      inputs.forEach(inp => {
-        inp.addEventListener('keydown', (e) => {
-          if (e.key === 'Enter') {
-            e.preventDefault();
-            enterCount++;
-            clearTimeout(enterTimer);
-            enterTimer = setTimeout(() => {
-              if (enterCount === 1) gradeCloze();
-              else btnClear.click();
-              enterCount = 0;
-            }, 300);
-          }
-        });
-      });
-
-      card.dataset.qtype = 'cloze';
-      card.dataset.blanks = (q.blanks || []).join('|||');
-
-    } else {
-      const tx = document.createElement('textarea');
-      tx.rows = 4;
-      tx.style.width = "100%";
-      tx.placeholder = "원문을 정확히 적어주세요.";
-      ans.appendChild(tx);
-
-      card.dataset.qtype = 'essay';
-      card.dataset.model = (q.model || "");
-
-      const judgeEssay = () => {
-        const old = card.querySelector('.model'); if (old) old.remove();
-        const judge = document.createElement('div');
-        judge.className = 'model';
-        judge.style.marginTop = '8px';
-
-        const gold = (q.model || "").trim();
-        const user = (tx.value || "").trim();
-        const ok = normalize(user) === normalize(gold);
-
-        let diffHtml = gold;
-        if (!ok) {
-          const gWords = gold.split(/\s+/);
-          const uWords = user.split(/\s+/);
-          diffHtml = gWords.map((w, i) =>
-            normalize(w) === normalize(uWords[i] || "") ? w : `<span class="err">${w}</span>`
-          ).join(" ");
+          const btnClear = document.createElement('button'); btnClear.textContent = '지우기'; btnClear.className = 'ghost';
+          btnClear.onclick = () => {
+            tx.value = ""; const old = card.querySelector('.model'); if (old) old.remove();
+            if (card.dataset.scored === "1") { card.dataset.scored = "0"; updateScore(); }
+          };
+          ans.appendChild(btnClear);
         }
 
-        judge.innerHTML = ok
-          ? `<div>✅ 정답!</div>`
-          : `<div>❌ 오답!</div>
-             <div class="muted" style="margin-top:6px"><strong>정답:</strong> ${diffHtml}</div>`;
-        details.appendChild(judge);
-
-        if (card.dataset.scored !== "1") {
-          if (ok) SCORES.got += 1;
-          card.dataset.scored = "1"; updateScore();
-        }
-        if (ok) setTimeout(()=>goToNextCard(card), 120);
-      };
-
-      const btnJudge = document.createElement('button');
-      btnJudge.textContent = '채점';
-      btnJudge.addEventListener('click', judgeEssay);
-      ans.appendChild(btnJudge);
-
-      const btnShow = document.createElement('button');
-      btnShow.textContent = '정답 보기';
-      btnShow.className = 'warn';
-      btnShow.addEventListener('click', () => {
-        const old = card.querySelector('.model'); if (old) old.remove();
-        const model = document.createElement('div'); model.className = 'model'; model.style.marginTop = '8px';
-
-        const gold = (q.model || "").trim();
-        const user = (tx.value || "").trim();
-        let diffHtml = gold;
-        if (normalize(user) !== normalize(gold)) {
-          const gWords = gold.split(/\s+/);
-          const uWords = user.split(/\s+/);
-          diffHtml = gWords.map((w, i) =>
-            normalize(w) === normalize(uWords[i] || "") ? w : `<span class="err">${w}</span>`
-          ).join(" ");
-        }
-
-        model.innerHTML = gold
-          ? `<details open><summary>모범답안</summary><div style="margin-top:6px">${diffHtml}</div></details>`
-          : `<div class="muted">모범답안 텍스트가 없습니다.</div>`;
-        details.appendChild(model);
+        details.appendChild(ans); card.appendChild(details); board.appendChild(card);
       });
-      ans.appendChild(btnShow);
-
-      const btnClear = document.createElement('button');
-      btnClear.textContent = '초기화';
-      btnClear.className = 'ghost';
-      btnClear.addEventListener('click', () => {
-        tx.value = "";
-        const old = card.querySelector('.model'); if (old) old.remove();
-        if (card.dataset.scored === "1") { card.dataset.scored = "0"; updateScore(); }
-      });
-      ans.appendChild(btnClear);
-
-      let enterCount = 0, enterTimer = null;
-      tx.addEventListener('keydown', (e) => {
-        if (e.key === 'Enter') {
-          e.preventDefault();
-          enterCount++;
-          clearTimeout(enterTimer);
-          enterTimer = setTimeout(() => {
-            if (enterCount === 1) judgeEssay();
-            else btnClear.click();
-            enterCount = 0;
-          }, 300);
-        }
-      });
-    }
-
-    details.appendChild(ans);
-    card.appendChild(details);
-    board.appendChild(card);
-  });
-};
+    };
 
     if(isMix){
-      if(clozes.length){ addSectionHeader('Ⅰ. 빈칸 문제'); renderBlock(clozes, 0); }
-      if(essays.length){ addSectionHeader('Ⅱ. 서술형');   renderBlock(essays, clozes.length); }
+      if(clozes.length){ addSectionHeader('🧩 빈칸 채우기'); renderBlock(clozes, 0); }
+      if(essays.length){ addSectionHeader('✍️ 전체 서술하기'); renderBlock(essays, clozes.length); }
     }else{
       renderBlock(list, 0);
     }
   }
 
-  // ===== 출제 =====
   function generate(isRegen=false){
     const cnt   = Math.max(1, Math.min(200, parseInt($('#count').value || "1",10)));
     const mode  = $('#modesel').value;
     const level = $('#level') ? $('#level').value : 'normal';
-
-    const realCnt  = examRunning ? 25        : cnt;
-    const realMode = examRunning ? 'mix'     : mode;
+    const realCnt  = examRunning ? 25 : cnt;
+    const realMode = examRunning ? 'mix' : mode;
     const realLvl  = examRunning ? 'extreme' : level;
 
     let chapters=[];
-    if(rangeMode && rangeMode.value==='range'){
+    if(rangeMode.value==='range'){
       let s=parseInt(startChSel.value,10), e=parseInt(endChSel.value,10);
       if(s>e){ const t=s; s=e; e=t; }
       for(let i=s;i<=e;i++) chapters.push(String(i));
     }else{
-      chapters=[chapterSel ? chapterSel.value : "7"];
+      chapters=[chapterSel.value];
     }
 
     const versesPool = collectVerses(chapters);
@@ -851,16 +715,8 @@
     }else if(realMode === "essay"){ wantEssay = realCnt; }
      else if(realMode === "cloze"){ wantCloze = realCnt; }
 
-    const bankEssay = [], bankCloze = [];
-
-    const takeEssay = bankEssay.slice(0, wantEssay);
-    const takeCloze = bankCloze.slice(0, wantCloze);
-
-    let needEssay = Math.max(0, wantEssay - takeEssay.length);
-    let needCloze = Math.max(0, wantCloze - takeCloze.length);
-
-    const used = new Set();
-    const autoEssay = [], autoCloze = [];
+    let needEssay = wantEssay, needCloze = wantCloze;
+    const used = new Set(), autoEssay = [], autoCloze = [];
     const shuffledVerses = shuffle(versesPool.slice());
 
     for(const [ch, vLabel, text] of shuffledVerses){
@@ -877,305 +733,122 @@
     }
 
     let pool = [];
-    if (realMode === "essay") {
-      const essays = [...takeEssay, ...autoEssay];
-      pool = shuffle(essays);
-    } else if (realMode === "cloze") {
-      const clozes = [...takeCloze, ...autoCloze];
-      pool = shuffle(clozes);
-    } else { 
-      const clozes = shuffle([...takeCloze, ...autoCloze]);
-      const essays = shuffle([...takeEssay, ...autoEssay]);
-      pool = [...clozes, ...essays];
-    }
+    if (realMode === "essay") pool = shuffle(autoEssay);
+    else if (realMode === "cloze") pool = shuffle(autoCloze);
+    else pool = [...shuffle(autoCloze), ...shuffle(autoEssay)];
 
-    if (!pool.length) { alert("출제할 문제가 없습니다. 범위를 넓혀보세요."); return; }
+    if (!pool.length) { alert("출제할 문제가 없습니다."); return; }
 
     CURRENT = pool.slice(0, realCnt);
     SCORES  = { got:0, max: CURRENT.length };
     renderQuestions(CURRENT);
-    board.style.display='';
-    result.style.display='';
+    board.style.display='block';
+    result.style.display='block';
     updateScore();
     if (retryBtn) retryBtn.style.display = examRunning ? 'none' : 'inline-block';
   }
 
-function printQuestions(){
-  if (!CURRENT || !CURRENT.length){
-    alert('출력할 문제가 없습니다.\n먼저 문제를 출제하거나 실전 모의고사를 시작해주세요.');
-    return;
-  }
-
-  const w   = window.open('', '_blank');
-  const doc = w.document;
-
-  doc.write(`<!DOCTYPE html>
-<html lang="ko">
-<head>
-<meta charset="utf-8">
-<title>요한계시록 실전 모의고사</title>
-<style>
-  @page { margin: 20mm; }
-  body{
-    font-family: 'Pretendard','Noto Sans KR',system-ui,-apple-system,'Segoe UI',Roboto,sans-serif;
-    font-size: 17pt;          
-    line-height: 1.8;
-    padding: 0;
-  }
-  h1{ font-size: 22pt; margin: 0 0 12px; }
-  .meta{ font-size: 12pt; color: #6b7280; margin-bottom: 2px; }
-  .q{ margin-bottom: 18px; page-break-inside: avoid; }
-  .prompt{ margin-left: 2px; }
-  .line{ border-bottom: 1px solid #cbd5e1; height: 26px; margin: 6px 0; }
-  .blank{
-    display: inline-block; position: relative; min-width: 160px; border-bottom: 1px solid #000; height: 1.2em; 
-  }
-  .blank::before, .blank::after{
-    position: absolute; bottom: 0; font-weight: normal; font-size: 1em;
-  }
-  .blank::before{ content: "("; left: 0; transform: translateY(0.05em); }
-  .blank::after{ content: ")"; right: 0; transform: translateY(0.05em); }
-</style>
-</head>
-<body>
-<h1>요한계시록 실전 모의고사</h1>
-`);
-
-  CURRENT.forEach((q, idx)=>{
-    const no   = idx + 1;
-    const typeLabel = (q.type === 'cloze') ? '[빈칸]' : '[서술]';
-    const ref  = q.ref || '';
-    let text;
-    if (q.type === 'cloze') {
-      text = q.prompt || '';
-      text = text.replace(/\(\s*\)/g, '<span class="blank"></span>');
-    } else {
-      text = q.ask || '해당 구절을 정확히 적으세요.';
-    }
-
-    doc.write('<div class="q">');
-    doc.write(`<div class="meta">${typeLabel} 문항 ${no} · ${ref}</div>`);
-    doc.write(`<div class="prompt">${no}. ${text}</div>`);
-
-    if (q.type === 'essay') {
-      for (let i = 0; i < 4; i++){
-        doc.write('<div class="line"></div>');
-      }
-    }
-    doc.write('</div>');
-  });
-
-  doc.write('</body></html>');
-  doc.close();
-
-  w.focus();
-  w.print();
-}
-
   function startExamTimer(){
-    const timerEl = document.createElement('div');
-    timerEl.id = 'timer';
-    document.body.appendChild(timerEl);
+    const timerEl = document.createElement('div'); timerEl.id = 'timer'; document.body.appendChild(timerEl);
     const endAt = Date.now() + (40*60*1000);
-
     const tick = ()=>{
       if(!examRunning) return;
       const remainMs = Math.max(0, endAt - Date.now());
-      const m = Math.floor(remainMs/60000);
-      const s = Math.floor((remainMs%60000)/1000);
-      timerEl.textContent = `남은 시간 ${m}:${s.toString().padStart(2,'0')}`;
-      if(remainMs <= 0){
-        clearInterval(examTimer);
-        examRunning=false;
-        finalizeExam();
-      }
+      const m = Math.floor(remainMs/60000); const s = Math.floor((remainMs%60000)/1000);
+      timerEl.textContent = `⏳ 남은 시간 ${m}:${s.toString().padStart(2,'0')}`;
+      if(remainMs <= 0){ clearInterval(examTimer); examRunning=false; finalizeExam(); }
     };
-    tick();
-    examTimer = setInterval(tick, 1000);
-    document.addEventListener('visibilitychange', ()=>{ if(document.visibilityState === 'visible') tick(); });
+    tick(); examTimer = setInterval(tick, 1000);
   }
 
   function finalizeExam(){
     const allCards = document.querySelectorAll('.card');
-    let correct = 0, total = 0;
-    const wrongIdx = [];
+    let correct = 0, total = 0; const wrongIdx = [];
+    $('#timer')?.remove(); examRunning = false;
 
-    $('#timer')?.remove();
-    examRunning = false;
-
-    if (genBtn)   genBtn.style.display   = '';
-    if (regenBtn) regenBtn.style.display = '';
     controls.forEach(el=>{ if(el) el.disabled = false; });
-    if (submitBtn) submitBtn.style.display = 'none';
-    $('#scoreWrap').style.display='';
+    genBtn.style.display=''; regenBtn.style.display=''; submitBtn.style.display='none';
+    $('#scoreWrap').style.display='block'; $('#examGuideText').style.display='block';
 
     allCards.forEach(card=>{
-      const qtype = card.dataset.qtype;
-      const idx = parseInt(card.dataset.idx, 10);
+      const qtype = card.dataset.qtype; const idx = parseInt(card.dataset.idx, 10);
       let ok = false;
-
       if(qtype === 'cloze'){
-        const inputs = card.querySelectorAll('input');
-        const golds  = (card.dataset.blanks || "").split('|||');
-        if(golds.length>0){
-          total++;
-          ok = [...inputs].every((inp,i)=>normalize(inp.value)===normalize(golds[i]||""));
-          if(ok) correct++;
-        }
+        const inputs = card.querySelectorAll('input'); const golds = (card.dataset.blanks || "").split('|||');
+        if(golds.length>0){ total++; ok = [...inputs].every((inp,i)=>normalize(inp.value)===normalize(golds[i]||"")); if(ok) correct++; }
       }else if(qtype === 'essay'){
-        const gold = card.dataset.model || "";
-        const user = (card.querySelector('textarea')?.value || "");
-        total++;
-        ok = (normalize(user)===normalize(gold));
-        if(ok) correct++;
+        const gold = card.dataset.model || ""; const user = (card.querySelector('textarea')?.value || "");
+        total++; ok = (normalize(user)===normalize(gold)); if(ok) correct++;
       }
       if(!ok && Number.isInteger(idx)) wrongIdx.push(idx);
     });
 
     const score = Math.round((correct/Math.max(1,total))*100);
-    alert(`시험 종료!\n\n총 ${total}문항 중 ${correct}개 정답\n최종 점수: ${score}점`);
+    alert(`🎉 시험 종료!\n\n총 ${total}문항 중 ${correct}개 정답\n최종 점수: ${score}점`);
 
     if(wrongIdx.length){
-      const review = wrongIdx.map(i => CURRENT[i]).filter(Boolean);
-      CURRENT = review;
+      CURRENT = wrongIdx.map(i => CURRENT[i]).filter(Boolean);
       renderQuestions(CURRENT);
-      board.style.display='';
-      result.style.display='';
-      SCORES = { got:0, max: CURRENT.length };
-      updateScore();
-
-      if (retryBtn) retryBtn.style.display = 'inline-block';
-
-      const wrapMsg = document.createElement('div');
-      wrapMsg.className = 'panel';
-      wrapMsg.style.marginTop = '12px';
-      wrapMsg.innerHTML = `<strong>오답 복습 시작</strong> · 총 ${review.length}문항만 다시 풀어요.`;
-      document.querySelector('.wrap').insertBefore(wrapMsg, document.getElementById('board'));
+      SCORES = { got:0, max: CURRENT.length }; updateScore();
+      retryBtn.style.display = 'inline-block';
+      const msg = document.createElement('div'); msg.className = 'guide-text'; msg.style.margin="20px 0";
+      msg.innerHTML = `<strong>💡 오답 복습 모드</strong>틀린 문제 ${CURRENT.length}개만 다시 모았습니다. 완벽하게 외워보세요!`;
+      board.insertBefore(msg, board.firstChild);
     } else {
-      const wrapMsg = document.createElement('div');
-      wrapMsg.className = 'panel';
-      wrapMsg.style.marginTop = '12px';
-      wrapMsg.textContent = '전부 정답입니다! 복습할 오답이 없습니다.';
-      document.querySelector('.wrap').insertBefore(wrapMsg, document.getElementById('board'));
-      if (retryBtn) retryBtn.style.display = 'none';
+      retryBtn.style.display = 'none';
+      alert('전부 맞추셨습니다! 대단합니다.');
     }
   }
 
-  $('#gen').addEventListener('click', generate);
-  $('#regen').addEventListener('click', ()=>generate(true));
-  retryBtn?.addEventListener('click', retryWrong);
-  printBtn?.addEventListener('click', printQuestions);
+  $('#gen').addEventListener('click', () => generate(false));
+  $('#regen').addEventListener('click', () => generate(true));
+  $('#printBtn').addEventListener('click', () => alert('프린트 기능은 브라우저 인쇄(Ctrl+P)를 활용해주세요.'));
+  
   $('#exam').addEventListener('click', ()=>{
     if (examRunning) return;
-    if (!rangeMode || rangeMode.value !== 'range') {
-      alert("실전 모의고사는 ‘장 범위’ 모드에서만 실행됩니다.\n시작/끝 장을 지정해주세요.");
-      return;
-    }
-  if (retryBtn) retryBtn.style.display = 'none';
-
-    if (countInput) countInput.value = '25';
-    if (modeSel)    modeSel.value    = 'mix';
-    if (levelSel)   levelSel.value   = 'extreme';
-
-    if (genBtn)   genBtn.style.display   = 'none';
-    if (regenBtn) regenBtn.style.display = 'none';
+    if (rangeMode.value !== 'range') { alert("실전 모의고사는 '장 범위' 모드에서만 가능합니다."); return; }
+    
+    countInput.value = '25'; modeSel.value = 'mix'; levelSel.value = 'extreme';
     controls.forEach(el=>{ if(el) el.disabled = true; });
-
-    examRunning   = true;
-    examSubmitted = false;
-    alert("실전 모의고사를 시작합니다. 제한시간 40분!");
-
-    $('#scoreWrap').style.display='none';
-    submitBtn.style.display = ''; submitBtn.disabled = false;
-    document.documentElement.classList.add('exam-fade-in');
-    setTimeout(()=>document.documentElement.classList.remove('exam-fade-in'), 300);
-
-    generate(true);
-    startExamTimer();
+    genBtn.style.display='none'; regenBtn.style.display='none'; retryBtn.style.display='none';
+    submitBtn.style.display = 'inline-flex';
+    $('#scoreWrap').style.display='none'; $('#examGuideText').style.display='none';
+    
+    examRunning = true; examSubmitted = false;
+    generate(); startExamTimer();
+    alert('🔥 실전 모의고사를 시작합니다. (제한시간 40분)');
   });
 
   submitBtn.addEventListener('click', ()=>{
     if (!examRunning || examSubmitted) return;
-    if (!confirm("제출하시겠습니까?")) return;
-    if (!confirm("제출 후에는 수정할 수 없습니다. 정말 제출할까요?")) return;
-    examSubmitted = true;
-    submitBtn.disabled = true;
-    clearInterval(examTimer);
-    examRunning = false;
-    finalizeExam();
+    if (!confirm("답안을 최종 제출하시겠습니까? 제출 후 수정 불가!")) return;
+    examSubmitted = true; submitBtn.disabled = true;
+    clearInterval(examTimer); finalizeExam();
   });
 
-  board.style.display='none';
-  result.style.display='none';
-  updateScore();
-
-  function retryWrong(){
-  if (examRunning) {
-    alert('실전 모의고사 진행 중에는 오답만 재도전이 비활성화됩니다.');
-    return;
-  }
-
-  const allCards = document.querySelectorAll('.card');
-  const wrongIdx = [];
-
-  allCards.forEach(card=>{
-    const qtype = card.dataset.qtype; 
-    const idx   = parseInt(card.dataset.idx, 10);
-    let ok = false;
-
-    if (qtype === 'cloze') {
-      const inputs = card.querySelectorAll('input');
-      const golds  = (card.dataset.blanks || "").split('|||');
-      if (golds.length > 0) {
-        ok = [...inputs].every((inp,i)=> normalize(inp.value) === normalize(golds[i]||""));
+  retryBtn.addEventListener('click', ()=>{
+    if (examRunning) return alert('시험 중에는 오답 재도전이 불가능합니다.');
+    const allCards = document.querySelectorAll('.card'); const wrongIdx = [];
+    allCards.forEach(card=>{
+      const qtype = card.dataset.qtype; const idx = parseInt(card.dataset.idx, 10); let ok = false;
+      if (qtype === 'cloze') {
+        const inputs = card.querySelectorAll('input'); const golds = (card.dataset.blanks || "").split('|||');
+        if (golds.length > 0) ok = [...inputs].every((inp,i)=> normalize(inp.value) === normalize(golds[i]||""));
+      } else {
+        const gold = card.dataset.model || ""; const user = (card.querySelector('textarea')?.value || "");
+        ok = (normalize(user) === normalize(gold));
       }
-    } else if (qtype === 'essay') {
-      const gold = card.dataset.model || "";
-      const user = (card.querySelector('textarea')?.value || "");
-      ok = (normalize(user) === normalize(gold));
-    }
-
-    if (!ok && Number.isInteger(idx)) wrongIdx.push(idx);
+      if (!ok && Number.isInteger(idx)) wrongIdx.push(idx);
+    });
+    if (wrongIdx.length === 0) return alert('오답이 없습니다! 🎉');
+    
+    CURRENT = wrongIdx.map(i => CURRENT[i]).filter(Boolean).map(q => ({ ...q }));
+    renderQuestions(CURRENT);
+    SCORES = { got: 0, max: CURRENT.length }; updateScore();
+    const msg = document.createElement('div'); msg.className = 'guide-text'; msg.style.margin="20px 0";
+    msg.innerHTML = `<strong>💡 오답만 재도전</strong>남은 ${CURRENT.length}문항을 다시 풉니다. 파이팅!`;
+    board.insertBefore(msg, board.firstChild);
   });
-
-  if (wrongIdx.length === 0) {
-    alert('오답이 없습니다. 전부 맞췄어요! 🎉');
-    return;
-  }
-
-  const review = wrongIdx.map(i => CURRENT[i]).filter(Boolean);
-  CURRENT = review.map(q => ({ ...q })); 
-  renderQuestions(CURRENT);
-
-  board.style.display  = '';
-  result.style.display = '';
-  SCORES = { got: 0, max: CURRENT.length };
-  updateScore();
-
-  const wrapMsg = document.createElement('div');
-  wrapMsg.className = 'panel';
-  wrapMsg.style.marginTop = '12px';
-  wrapMsg.innerHTML = `<strong>오답만 재도전</strong> · 총 ${CURRENT.length}문항만 다시 풀도록 구성했어요.`;
-  document.querySelector('.wrap').insertBefore(wrapMsg, document.getElementById('board'));
-}
-
-document.getElementById('exam').addEventListener('click', ()=>{
-  if (examRunning) return;
-  if (!rangeMode || rangeMode.value !== 'range') {
-    alert("실전 모의고사는 '장 범위' 모드에서만 가능합니다.\n시작/끝 장을 선택하세요.");
-    return;
-  }
-  if (retryBtn) retryBtn.style.display = 'none';
-
-  if (countInput) countInput.value = '25';     
-  if (modeSel)    modeSel.value    = 'mix';    
-  if (levelSel)   levelSel.value   = 'extreme';
-
-  examRunning = true;
-  generate(); 
-
-  alert('실전 모의고사를 시작합니다!');
-});
   </script>
 </body>
 </html>
